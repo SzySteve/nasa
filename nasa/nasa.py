@@ -6,6 +6,7 @@ from .response import handle_search_response, handle_response
 API_ROOT = 'https://images-api.nasa.gov'
 SEARCH_ENDPOINT = '{}/{}'.format(API_ROOT, 'search')
 METADATA_ENDPOINT = '{}/{}/'.format(API_ROOT, 'metadata')
+CAPTIONS_ENDPOINT = '{}/{}/'.format(API_ROOT, 'captions')
 
 MEDIA_AUDIO = 'audio'
 MEDIA_IMAGE = 'image'
@@ -106,3 +107,26 @@ def metadata(nasa_id):
     response = handle_response(requests.get(location))
     return response.json()
 
+def _get_caption_location(nasa_id):
+    url = CAPTIONS_ENDPOINT + nasa_id
+    response = requests.get(url)
+    handle_response(response)
+    return response.json()['location']
+
+
+def caption(nasa_id):
+    """
+    Fetches caption data for a given nasa id. Returns the caption and the format.
+    :param nasa_id: 
+    :return: Dict of subtitles and their format.
+    """
+    location = _get_caption_location(nasa_id)
+    response = handle_response(requests.get(location))
+    subtitle_format = 'srt'
+    if location.endswith('vtt'):
+        subtitle_format = 'vtt'
+
+    return {
+        'format': subtitle_format,
+        'subtitles': response.content
+    }
