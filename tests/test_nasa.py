@@ -8,12 +8,10 @@ test_nasa
 Tests for `nasa` module.
 """
 
-
 import sys
 import unittest
 
 from nasa import nasa
-
 
 
 class TestNasa(unittest.TestCase):
