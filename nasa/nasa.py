@@ -1,10 +1,11 @@
 import requests
 
 from .exceptions import NASAValidationError
-from .response import handle_response
+from .response import handle_search_response, handle_response
 
 API_ROOT = 'https://images-api.nasa.gov'
 SEARCH_ENDPOINT = '{}/{}'.format(API_ROOT, 'search')
+METADATA_ENDPOINT = '{}/{}/'.format(API_ROOT, 'metadata')
 
 MEDIA_AUDIO = 'audio'
 MEDIA_IMAGE = 'image'
@@ -85,6 +86,23 @@ def search(query=None, description=None, center=None, keywords=None, location=No
                                               'year_start': year_start,
                                               'year_end': year_end})
 
-    return handle_response(response)
+    return handle_search_response(response)
 
+
+def _get_metadata_location(nasa_id):
+    url = METADATA_ENDPOINT + nasa_id
+    response = requests.get(url)
+    handle_response(response)
+    return response.json()['location']
+
+
+def metadata(nasa_id):
+    """
+    Hits the metadata endpoint to get the location of the metadata json and returns it so you dont have to.
+    :param nasa_id: 
+    :return: Response JSON 
+    """
+    location = _get_metadata_location(nasa_id)
+    response = handle_response(requests.get(location))
+    return response.json()
 

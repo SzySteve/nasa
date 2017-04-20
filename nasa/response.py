@@ -2,13 +2,15 @@ import requests
 
 from .exceptions import NASAResponseError
 
-
 def handle_response(response):
     if response.status_code != 200:
         raise NASAResponseError(response.content)
     else:
-        return NASAResponse(response)
+        return response
 
+def handle_search_response(response):
+    response = handle_response(response)
+    return NASAResponse(response)
 
 class NASAResponse(object):
 
@@ -28,9 +30,9 @@ class NASAResponse(object):
     def fetch_next(self):
         if self.next_link:
             response = requests.get(self.next_link)
-            return handle_response(response)
+            return handle_search_response(response)
 
     def fetch_previous(self):
         if self.next_link:
             response = requests.get(self.next_link)
-            return handle_response(response)
+            return handle_search_response(response)
