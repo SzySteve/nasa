@@ -2,15 +2,27 @@ import requests
 
 from .exceptions import NASAResponseError
 
+
 def handle_response(response):
+    """
+    Catches non-200 responses and raises, or returns the response.
+    :return: response
+    """
     if response.status_code != 200:
         raise NASAResponseError(response.content)
     else:
         return response
 
+
 def handle_search_response(response):
+    """
+    Wraps handle_response and initializes a NASAResponse object.
+    :param response: 
+    :return: NASAResponse
+    """
     response = handle_response(response)
     return NASAResponse(response)
+
 
 class NASAResponse(object):
 
