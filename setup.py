@@ -10,11 +10,10 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    # TODO: put package requirements here
+    'requests==2.13.0'
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
 ]
 
 setup(
