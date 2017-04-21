@@ -1,30 +1,19 @@
-# Config file for automatic testing at travis-ci.org
-# This file will be regenerated if you run travis_pypi_setup.py
-
 language: python
 python: 3.5
-
 env:
-  - TOXENV=py35
-  - TOXENV=py34
-  - TOXENV=py33
-  - TOXENV=py27
-  - TOXENV=pypy
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- TOXENV=py35
+- TOXENV=py34
+- TOXENV=py33
+- TOXENV=py27
+- TOXENV=pypy
 install: pip install -U tox
-
-# command to run tests, e.g. python setup.py test
 script: tox -e ${TOXENV}
-
-# After you create the Github repo and add it to Travis, run the
-# travis_pypi_setup.py script to finish PyPI deployment setup
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: szysteve
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: USKyaT/Eh7SQqFAQLbJgkLVhsfx8EoK6jMlI609nXh/dRDPlK9Kzg4N/TobLeacvXc6qCo1jLKcN6HntuY2+2XAs/GGFJrEVXeJzEmM9U8YfoR+bS2T56oT8B0RQxUYYWd22Oq9LNRQxND+79QlQEKOwXJOVGWCsGwVUGf3rO7MGLj5ole72RmF9JsUJqNSY3AmXu0ibrZ8BFrZmJ7KEbrrjoHNT56l4m4WbtWNRnKVn9KbLVU9h01vMdGdZPJ+G9ysk5PbK8L70tJzIi4tJu0H3pYbSquBYUoyQ9nDbdeCDijQRTvPFsCmAgoiFM1iQYRtdPW/PhyC+GsW+U0NCRBGjra62hWeitLi+DG5BWWAbJWIrOXGdDOuJksM9ymqv8CBS7PGsYi1nNM3/Dq8bSuAWeLD7wjQhVyVHd+eoSLsNodk6Z3lHkq62+d+I4ZqgIOtA0rYUiVAW51fcJkauDhQeBoka61ScK52Sl+N8U7OXxbgLf01Kf8HUx8nEP8ABhCA3UvdYMg5K6GlPHiKBdgD8P9pZ5qpCXvuxbwg3X54c5JwbwryjFaDdrwhvxd7HAWfnWIaeSBSnBlMtmdlyRF4fZGq1FcdmowYLbkGDrcMZ0MAXYeu3DzedveVOxRMA6q/4NCIsvUfKRsBOec0bcZ48VSGqWajGLHH4JUVsAxU=
   on:
     tags: true
     repo: szysteve/nasa
